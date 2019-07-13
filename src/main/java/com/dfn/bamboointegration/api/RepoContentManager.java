@@ -100,7 +100,6 @@ public abstract class RepoContentManager {
         }
         List<XWPFTable> tables = document.getTables();
         for (XWPFTable table : tables) {
-            buildLogger.addBuildLogEntry(table.getRow(0).getCell(1).getText());
             switch (table.getRow(0).getCell(1).getText()) {
                 case "Version":
                     table.getRow(1).getCell(0).removeParagraph(0);

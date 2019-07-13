@@ -22,10 +22,12 @@ public class GitRepoContentManagerImp extends RepoContentManager {
         buildLogger.addBuildLogEntry("Starting reading release note file template");
         String path = taskContext.getWorkingDirectory().getPath() + "/Release_Template.docx";
         XWPFDocument doc = ReadReleaseDocument(path);
+        buildLogger.addBuildLogEntry("commit messages inserting to release note");
         organizeCommitMessageTables(doc, commitMessages);
         String pomPath = taskContext.getWorkingDirectory().getPath() + "/pom.xml";
         MavenXpp3Reader reader = new MavenXpp3Reader();
         Model model = reader.read(new FileReader(pomPath));
+        buildLogger.addBuildLogEntry("pom file details inserting to release note");
         replaceDocValuesFromPomFile(doc, model);
         buildLogger.addBuildLogEntry("Starting writing release note generated file");
         String path1 = taskContext.getWorkingDirectory().getPath() + "/Release_Template_Generated.docx";
