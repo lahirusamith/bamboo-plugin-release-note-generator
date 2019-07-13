@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class ReleaseNoteTaskConfigurator extends AbstractTaskConfigurator {
     @Override
+    @NotNull
     public Map<String, String> generateTaskConfigMap(@NotNull final ActionParametersMap params,
                                                      @Nullable final TaskDefinition previousTaskDefinition) {
         final Map<String, String> config = super.generateTaskConfigMap(params, previousTaskDefinition);

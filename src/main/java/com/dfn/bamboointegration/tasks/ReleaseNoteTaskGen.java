@@ -55,7 +55,10 @@ public class ReleaseNoteTaskGen implements TaskType {
         try {
             gitRepoContentManagerImp.generateReleaseNoteTemp(commitMessages);
         } catch (Exception e) {
-            buildLogger.addBuildLogEntry("creating Template stopped :" + e);
+            buildLogger.addBuildLogEntry("creating Template stopped :" + e.getCause());
+            for(StackTraceElement t:e.getStackTrace()){
+                buildLogger.addBuildLogEntry(t.toString());
+            }
         }
     }
 
