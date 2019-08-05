@@ -19,6 +19,7 @@
     <context>releasenotegenerator</context> 
   </web-resource>
   <taskType key="release-note-task" name="DirectFN release note generator task" class="com.dfn.bamboointegration.tasks.ReleaseNoteTaskGen">
+    <category name="builder"/>
     <resource type="download" name="icon" location="icon.png"/>
     <description>task module which generate release notes from predefined template</description>
     <configuration class="com.dfn.bamboointegration.config.ReleaseNoteTaskConfigurator"/>

@@ -7,9 +7,7 @@ import org.apache.maven.model.Model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public abstract class RepoContentManager {
@@ -30,7 +28,6 @@ public abstract class RepoContentManager {
     protected void organizeCommitMessageTables(XWPFDocument document, CommitMessages commitMessages) {
         List<XWPFTable> tables = document.getTables();
         for (XWPFTable table : tables) {
-            buildLogger.addBuildLogEntry(table.getRow(0).getCell(1).getText());
             switch (table.getRow(0).getCell(1).getText()) {
                 case "New Features Description":
                     ArrayList<Message> newFeatures = commitMessages.getImprovements();
@@ -54,14 +51,18 @@ public abstract class RepoContentManager {
     }
 
     private void populateTable(ArrayList<Message> dataArray, XWPFTable table) {
+        Map<String, Boolean> refId = new HashMap<>();
         for (int i = 0; i < dataArray.size(); i++) {
             if (dataArray.get(i) != null) {
                 Message message = dataArray.get(i);
                 if (i == 0) {
                     table.removeRow(1);
                 }
-                XWPFTableRow tableRowTwo = table.createRow();
                 String[] rowData = message.getCommitMessage().split(Pattern.quote("|"));
+                if (rowData.length == 1 || (refId.containsKey(rowData[1].trim()) && refId.get(rowData[1].trim()))){
+                    continue;
+                }
+                XWPFTableRow tableRowTwo = table.createRow();
                 if (rowData.length == 2) {
                     tableRowTwo.getCell(0).setText(rowData[1]);
                 }
@@ -69,6 +70,7 @@ public abstract class RepoContentManager {
                     tableRowTwo.getCell(0).setText(rowData[1]);
                     tableRowTwo.getCell(1).setText(rowData[2]);
                 }
+                refId.put(rowData[1].trim(),rowData[1].trim().length() > 1);
             }
         }
     }

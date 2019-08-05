@@ -13,5 +13,6 @@ public abstract class RepoInfoManager {
         this.buildLogger = taskContext.getBuildLogger();
     }
 
-    abstract public CommitMessages getCommitMessageList(final String revision, final String preRevision, CommitMessages commitMessages);
+    abstract public CommitMessages getCommitMessageList(final String revision, final String preRevision,
+                                                        CommitMessages commitMessages);
 }

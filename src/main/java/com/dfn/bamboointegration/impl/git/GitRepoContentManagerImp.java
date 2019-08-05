@@ -20,7 +20,7 @@ public class GitRepoContentManagerImp extends RepoContentManager {
     @Override
     public void generateReleaseNoteTemp(final CommitMessages commitMessages) throws Exception {
         buildLogger.addBuildLogEntry("Starting reading release note file template");
-        String path = taskContext.getWorkingDirectory().getPath() + "/Release_Template.docx";
+        String path = taskContext.getWorkingDirectory().getPath() + "/Release_Note_Template.docx";
         XWPFDocument doc = ReadReleaseDocument(path);
         buildLogger.addBuildLogEntry("commit messages inserting to release note");
         organizeCommitMessageTables(doc, commitMessages);
@@ -30,7 +30,12 @@ public class GitRepoContentManagerImp extends RepoContentManager {
         buildLogger.addBuildLogEntry("pom file details inserting to release note");
         replaceDocValuesFromPomFile(doc, model);
         buildLogger.addBuildLogEntry("Starting writing release note generated file");
-        String path1 = taskContext.getWorkingDirectory().getPath() + "/Release_Template_Generated.docx";
+        String destinationPath = taskContext.getConfigurationMap().get("destinationFileLocation");
+        if (destinationPath == null || destinationPath.isEmpty()){
+            buildLogger.addBuildLogEntry("release note destination path is not set.changing to default location");
+            destinationPath = taskContext.getWorkingDirectory().getPath();
+        }
+        String path1 = destinationPath + "/Release_Note_.docx";
         try {
             OutputStream out = new FileOutputStream(path1);
             doc.write(out);

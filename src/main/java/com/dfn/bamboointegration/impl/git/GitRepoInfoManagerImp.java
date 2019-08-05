@@ -42,6 +42,7 @@ public class GitRepoInfoManagerImp extends RepoInfoManager {
                     String sComment = rev.getFullMessage();
                     buildLogger.addBuildLogEntry("commit Message : " + sComment);
                     commitMessages.addCommitMessage(sComment);
+                    commitMessages.setCommitMessagesAvailable(true);
                     message = new GitMessageImp();
                     message.setAuthor(rev.getAuthorIdent().getName());
                     message.setCommitMessage(sComment);
@@ -78,6 +79,7 @@ public class GitRepoInfoManagerImp extends RepoInfoManager {
             } catch (Exception e) {
                 buildLogger.addBuildLogEntry("Error when getting comments :" + e.getMessage() +
                         " _ " + e.getCause());
+                commitMessages.setCommitMessagesAvailable(false);
             }
         } else {
             buildLogger.addBuildLogEntry("Git repo access error. repo is null.");

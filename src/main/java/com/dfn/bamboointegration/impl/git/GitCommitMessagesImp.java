@@ -12,6 +12,7 @@ public class GitCommitMessagesImp implements CommitMessages {
     private ArrayList<Message> defects = new ArrayList<>();
     private ArrayList<Message> improvements = new ArrayList<>();
     private ArrayList<Message> removedFeatures  = new ArrayList<>();
+    private boolean commitMessagesAvailable = false;
 
     @Override
     public ArrayList<String> getCommitMessages() {
@@ -23,18 +24,22 @@ public class GitCommitMessagesImp implements CommitMessages {
         return commitMessageInfo;
     }
 
+    @Override
     public ArrayList<Message> getChangeRequests() {
         return changeRequests;
     }
 
+    @Override
     public ArrayList<Message> getDefects() {
         return defects;
     }
 
+    @Override
     public ArrayList<Message> getImprovements() {
         return improvements;
     }
 
+    @Override
     public ArrayList<Message> getRemovedFeatures() {
         return removedFeatures;
     }
@@ -69,5 +74,13 @@ public class GitCommitMessagesImp implements CommitMessages {
         this.removedFeatures.add(removedFeature);
     }
 
+    @Override
+    public boolean isCommitMessagesAvailable() {
+        return commitMessagesAvailable;
+    }
 
+    @Override
+    public void setCommitMessagesAvailable(boolean commitMessagesAvailable) {
+        this.commitMessagesAvailable = commitMessagesAvailable;
+    }
 }
