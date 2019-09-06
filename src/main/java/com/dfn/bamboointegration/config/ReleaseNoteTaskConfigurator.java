@@ -17,6 +17,7 @@ public class ReleaseNoteTaskConfigurator extends AbstractTaskConfigurator {
         config.put("buildRevision", params.getString("buildRevision"));
         config.put("buildPreviousRevision", params.getString("buildPreviousRevision"));
         config.put("releaseLabel", params.getString("releaseLabel"));
+        config.put("sourceFileLocation", params.getString("sourceFileLocation"));
         config.put("destinationFileLocation", params.getString("destinationFileLocation"));
         return config;
     }

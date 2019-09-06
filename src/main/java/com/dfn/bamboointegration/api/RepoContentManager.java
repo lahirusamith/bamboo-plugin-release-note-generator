@@ -3,9 +3,6 @@ package com.dfn.bamboointegration.api;
 import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.atlassian.bamboo.task.TaskContext;
 import com.atlassian.bamboo.vcs.configuration.PlanRepositoryDefinition;
-import com.atlassian.bandana.DefaultBandanaManager;
-import com.atlassian.bandana.impl.MemoryBandanaPersister;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -18,12 +15,10 @@ import java.util.regex.Pattern;
 public abstract class RepoContentManager {
     protected TaskContext taskContext;
     protected BuildLogger buildLogger;
-    private DefaultBandanaManager defaultBandanaManager;
 
     public RepoContentManager(final TaskContext taskContext) {
         this.taskContext = taskContext;
         this.buildLogger = taskContext.getBuildLogger();
-        this.defaultBandanaManager = new DefaultBandanaManager(new MemoryBandanaPersister());
     }
 
     protected XWPFDocument ReadReleaseDocument(String path) throws IOException {

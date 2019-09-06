@@ -66,6 +66,16 @@ public class GitRepoInfoManagerImp extends RepoInfoManager {
                                     commitMessages.addImprovement(message);
                                     buildLogger.addBuildLogEntry("New Feature identified :" + sComment);
                                     break;
+                                case "CR":
+                                    commitMessages.addImprovement(message);
+                                    buildLogger.addBuildLogEntry("CR Feature identified :" + sComment);
+                                    break;
+                                case "REV":
+                                    buildLogger.addBuildLogEntry("Changes after review identified :" + sComment);
+                                    break;
+                                case "INT":
+                                    buildLogger.addBuildLogEntry("Internal changes identified :" + sComment);
+                                    break;
                                 case "REM":
                                     commitMessages.addRemovedFeature(message);
                                     buildLogger.addBuildLogEntry("Remove in code identified :" + sComment);

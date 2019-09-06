@@ -1,11 +1,8 @@
 package com.dfn.bamboointegration.tasks;
 
-import com.atlassian.bamboo.bandana.PlanAwareBandanaContext;
 import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.atlassian.bamboo.task.*;
 
-import com.atlassian.bandana.DefaultBandanaManager;
-import com.atlassian.bandana.impl.MemoryBandanaPersister;
 import com.dfn.bamboointegration.api.CommitMessages;
 import com.dfn.bamboointegration.api.RepoContentManager;
 import com.dfn.bamboointegration.api.RepoInfoManager;
@@ -13,9 +10,6 @@ import com.dfn.bamboointegration.impl.git.GitCommitMessagesImp;
 import com.dfn.bamboointegration.impl.git.GitRepoContentManagerImp;
 import com.dfn.bamboointegration.impl.git.GitRepoInfoManagerImp;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReleaseNoteTaskGen implements TaskType {
     @NotNull
