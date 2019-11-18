@@ -19,6 +19,9 @@ public class ReleaseNoteTaskConfigurator extends AbstractTaskConfigurator {
         config.put("releaseLabel", params.getString("releaseLabel"));
         config.put("sourceFileLocation", params.getString("sourceFileLocation"));
         config.put("destinationFileLocation", params.getString("destinationFileLocation"));
+        config.put("dbUrl", "");
+        config.put("dbUser", "bamboo");
+        config.put("dbPassword", "password");
         return config;
     }
 }

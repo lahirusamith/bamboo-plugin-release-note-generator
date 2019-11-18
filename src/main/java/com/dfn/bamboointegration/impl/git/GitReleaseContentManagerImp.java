@@ -2,7 +2,7 @@ package com.dfn.bamboointegration.impl.git;
 
 import com.atlassian.bamboo.task.TaskContext;
 import com.dfn.bamboointegration.api.CommitMessages;
-import com.dfn.bamboointegration.api.RepoContentManager;
+import com.dfn.bamboointegration.api.ReleaseContentManager;
 //import org.apache.maven.model.Model;
 //import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -13,12 +13,12 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GitRepoContentManagerImp extends RepoContentManager {
+public class GitReleaseContentManagerImp extends ReleaseContentManager {
     //private boolean isPomAvailable = true;
     //private boolean isJsonAvailable = false;
 
 
-    public GitRepoContentManagerImp(final TaskContext taskContext) {
+    public GitReleaseContentManagerImp(final TaskContext taskContext) {
         super(taskContext);
     }
 
@@ -58,7 +58,7 @@ public class GitRepoContentManagerImp extends RepoContentManager {
         try {
             OutputStream out = new FileOutputStream(path1);
             doc.write(out);
-            setOldLabel(taskContext.getConfigurationMap().get("releaseLabel"));
+            oldLabelPersist.setOldLabel(taskContext.getConfigurationMap().get("releaseLabel"));
             buildLogger.addBuildLogEntry("writing file is done");
         } catch (Exception ex) {
             buildLogger.addErrorLogEntry(path1);

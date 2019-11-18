@@ -11,17 +11,18 @@
   <!-- add our i18n resource -->
   <resource type="i18n" name="i18n" location="releasenotegenerator"/>  
   <!-- add our web resources -->  
-  <web-resource key="releasenotegenerator-resources" name="releasenotegenerator Web Resources"> 
+  <web-resource key="releaseNoteGenerator-resources" name="releaseNoteGenerator Web Resources">
     <dependency>com.atlassian.auiplugin:ajs</dependency>  
     <resource type="download" name="releasenotegenerator.css" location="/css/releasenotegenerator.css"/>  
     <resource type="download" name="releasenotegenerator.js" location="/js/releasenotegenerator.js"/>  
     <resource type="download" name="images/" location="/images"/>  
-    <context>releasenotegenerator</context> 
+    <context>releaseNoteGenerator</context>
   </web-resource>
-  <taskType key="release-note-task" name="DirectFN release note generator task" class="com.dfn.bamboointegration.tasks.ReleaseNoteTaskGen">
+  <taskType key="release-note-task" name="DirectFN release note generator task"
+            class="com.dfn.bamboointegration.tasks.ReleaseNoteTaskGenNew">
     <category name="builder"/>
     <resource type="download" name="icon" location="icon.png"/>
-    <description>task module which generate release notes from predefined template</description>
+    <description>Task module which generate release notes from predefined template</description>
     <configuration class="com.dfn.bamboointegration.config.ReleaseNoteTaskConfigurator"/>
     <resource type="freemarker" name="edit" location="/templates/taskConfigUI.ftl"/>
   </taskType>

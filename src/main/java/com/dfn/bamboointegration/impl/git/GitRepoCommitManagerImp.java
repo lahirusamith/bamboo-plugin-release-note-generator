@@ -3,21 +3,21 @@ package com.dfn.bamboointegration.impl.git;
 import com.atlassian.bamboo.task.TaskContext;
 import com.dfn.bamboointegration.api.CommitMessages;
 import com.dfn.bamboointegration.api.Message;
-import com.dfn.bamboointegration.api.RepoInfoManager;
+import com.dfn.bamboointegration.api.RepoCommitManager;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.File;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-public class GitRepoInfoManagerImp extends RepoInfoManager {
-    private Repository repo;
+public class GitRepoCommitManagerImp extends RepoCommitManager {
 
-    public GitRepoInfoManagerImp(final TaskContext taskContext) {
+    public GitRepoCommitManagerImp(final TaskContext taskContext) {
         super(taskContext);
         FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
         String path = this.taskContext.getWorkingDirectory().getPath() + "/.git";
@@ -30,12 +30,19 @@ public class GitRepoInfoManagerImp extends RepoInfoManager {
         }
     }
 
-    public CommitMessages getCommitMessageList(String revision, String preRevision, CommitMessages commitMessages) {
+    public CommitMessages getCommitMessageList(String revision, String preRevision, CommitMessages commitMessages, boolean tag) {
         if (this.repo != null) {
             try {
                 Git git = new Git(this.repo);
-                Iterable<RevCommit> log = git.log().addRange(this.repo.resolve(preRevision),
-                        this.repo.resolve(revision)).call();
+                Iterable<RevCommit> log;
+                if(tag) {
+                    Ref refFrom = repo.findRef(preRevision);
+                    log = git.log().addRange(getActualRefObjectId(refFrom), this.repo.resolve(revision)).call();
+                } else {
+                    log = git.log().addRange(this.repo.resolve(preRevision), this.repo.resolve(revision) ).call();
+                }
+                //Iterable<RevCommit> log = git.log().addRange(getActualRefObjectId(refFrom), this.repo.resolve(revision)).call();
+                //Iterable<RevCommit> log = git.log().addRange(this.repo.resolve(preRevision), this.repo.resolve(revision) ).call();
                 Message message;
                 for (Iterator<RevCommit> iterator = log.iterator(); iterator.hasNext(); ) {
                     RevCommit rev = iterator.next();
@@ -89,6 +96,9 @@ public class GitRepoInfoManagerImp extends RepoInfoManager {
             } catch (Exception e) {
                 buildLogger.addBuildLogEntry("Error when getting comments :" + e.getMessage() +
                         " _ " + e.getCause());
+                for (StackTraceElement t : e.getStackTrace()) {
+                    buildLogger.addBuildLogEntry(t.toString());
+                }
                 commitMessages.setCommitMessagesAvailable(false);
             }
         } else {
